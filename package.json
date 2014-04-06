@@ -1,16 +1,16 @@
 {
   "name": "expensy",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A mobile web application for tracking your expenses",
   "main": "index.js",
-  "author": "smonusbonus",
+  "author": "Simon Kreiser <simokrei@gmail.com>",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/smonusbonus/expensy.git"
   },
   "devDependencies": {
-
+    "express": "3.5.1"
   },
   "engines": {
     "node": "0.10.x"
