@@ -9,14 +9,14 @@
     "type": "git",
     "url": "https://github.com/smonusbonus/expensy.git"
   },
-  "devDependencies": {
+  /*"devDependencies": {
     "grunt": "~0.4.2",
     "grunt-contrib-jshint": "~0.6.3",
     "grunt-contrib-nodeunit": "~0.2.0",
     "grunt-contrib-uglify": "~0.4.0",
     "grunt-contrib-concat": "~0.3.0",
     "grunt-contrib-sass": "~0.7.3"
-  },
+  },*/
   "engines": {
     "node": "0.10.x"
   }
