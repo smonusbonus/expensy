@@ -2,7 +2,7 @@
   "name": "expensy",
   "version": "0.0.1",
   "description": "A mobile web application for tracking your expenses",
-  "main": "index.js",
+  "main": "app.js",
   "author": "Simon Kreiser <simokrei@gmail.com>",
   "license": "MIT",
   "repository": {
@@ -13,7 +13,8 @@
     "node": "0.10.x"
   },
   "dependencies": {
-    "express": "~3.5.1"
+    "express": "~3.5.1",
+    "jade": "~0.31.2"
   },
   "devDependencies": {
     "grunt": "~0.4.2",
