@@ -1,14 +1,9 @@
-// Load the http module to create an http server.
+// hello world example
 var http = require('http');
 
-// Configure our HTTP server to respond with Hello World to all requests.
-var server = http.createServer(function (request, response) {
-  response.writeHead(200, {"Content-Type": "text/plain"});
-  response.end("Hello World\n");
-});
+http.createServer(function (req, res) {
+  res.writeHead(200, {'Content-Type': 'text/plain'});
+  res.end('Hello World\n');
+}).listen(1337, '127.0.0.1');
 
-// Listen on port 80, IP defaults to 127.0.0.1
-server.listen(80);
-
-// Put a friendly message on the terminal
-//console.log("Server running at http://127.0.0.1:8000/");
+console.log('Server running at http://127.0.0.1:1337/');
