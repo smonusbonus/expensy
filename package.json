@@ -9,6 +9,9 @@
     "type": "git",
     "url": "https://github.com/smonusbonus/expensy.git"
   },
+  "devDependencies": {
+
+  },
   "engines": {
     "node": "0.10.x"
   }
