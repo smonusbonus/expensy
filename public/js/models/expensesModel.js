@@ -18,8 +18,9 @@ expenseTrackerAppModule.service('expensesModel', function (categoriesModel, user
       description : null,
       category_id : null
     };
+
   // pre-defined expenses for testing
-  expenses.push(
+  /*expenses.push(
     {
       id : 0,
       amount : 123.00,
@@ -101,7 +102,7 @@ expenseTrackerAppModule.service('expensesModel', function (categoriesModel, user
       description : null,
       category_id : 1
     }
-  );
+  );*/
 
   Date.prototype.monthDays = function () {
     var d = new Date(this.getFullYear(), this.getMonth() + 1, 0);

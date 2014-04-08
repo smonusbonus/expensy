@@ -3,11 +3,8 @@
  */
 
 var express = require('express'),
-  routes = require('./routes'),
   http = require('http'),
-  path = require('path');
-
-var app = module.exports = express();
+  app = express();
 
 
 /**
@@ -15,14 +12,15 @@ var app = module.exports = express();
  */
 
 // all environments
-app.set('port', process.env.PORT || 3000);
-app.set('views', __dirname + '/views');
-app.set('view engine', 'jade');
-app.use(express.logger('dev'));
-app.use(express.bodyParser());
-app.use(express.methodOverride());
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(app.router);
+app.set('port', process.env.PORT || 5000);
+
+//app.set('views', __dirname + '/views');
+//app.set('view engine', 'jade');
+//app.use(express.logger('dev'));
+//app.use(express.bodyParser());
+//app.use(express.methodOverride());
+//app.use(express.static(path.join(__dirname, 'public')));
+//app.use(app.router);
 
 // development only
 if (app.get('env') === 'development') {
@@ -39,12 +37,24 @@ if (app.get('env') === 'production') {
  * Routes
  */
 
-// serve index and view partials
-app.get('/', routes.index);
-app.get('/partials/:name', routes.partials);
+// serve index
+app.get('/', function (req, res) {
+  res.sendfile(__dirname + '/public/index.html');
+});
 
-// redirect all others to the index (HTML5 history)
-app.get('*', routes.index);
+// serve all remaining files the client asks for
+app.get('*', function (req, res) {
+
+  //console.log(req._parsedUrl.pathname);
+  res.sendfile(__dirname + '/public' + req._parsedUrl.pathname);
+
+});
+
+
+/**
+ * API
+ */
+
 
 
 /**
