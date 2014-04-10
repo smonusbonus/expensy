@@ -5,9 +5,6 @@
   "main": "app.js",
   "author": "Simon Kreiser <simokrei@gmail.com>",
   "license": "MIT",
-  "scripts": {
-    "start": "node app.js"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/smonusbonus/expensy.git"
