@@ -4,11 +4,7 @@
 
 var express = require('express'),
   http = require('http'),
-  app = express(),
-
-// database connection
-  mongo = require('mongodb'),
-  mongoUri = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/mydb';
+  app = express();
 
 /**
  * Configuration
@@ -58,15 +54,54 @@ app.get('*', function (req, res, next) {
   }
 });
 
-app.get('/api/*', function (req, res) {
-  //res.send('Hello API');
-  console.log('you reached the API');
-  res.send(200, { id: 7882, firstName: 'Simon' });
-});
 
 /**
  * API
  */
+
+// database connection
+var mongodb = require('mongodb'),
+  mongoUri = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/mydb',
+  mongoClient = mongodb.mongoClient;
+
+app.get('/api/expenses', function (req, res) {
+  //res.send('Hello API');
+  //res.send(200, { id: 7882, firstName: 'Simon' });
+
+  console.log('you reached the API');
+
+
+  mongoClient.connect(mongoUri, function (err, db) {
+
+    // operate on the collection named "expenses"
+    var expenesCollection = db.collection('expenses');
+
+    collection.find({}).limit(30).toArray(function (err, docs) {
+      if (err) {
+        return console.error(err);
+      }
+      console.log('searching for docs');
+
+      docs.forEach(function (doc) {
+        console.log('found document: ', doc);
+      });
+    });
+
+});
+
+
+
+
+
+/*app.get('/api/*', function (req, res) {
+  //res.send('Hello API');
+  console.log('you reached the API');
+  res.send(200, { id: 7882, firstName: 'Simon' });
+});*/
+
+
+
+
 
 
 
