@@ -4,8 +4,11 @@
 
 var express = require('express'),
   http = require('http'),
-  app = express();
+  app = express(),
 
+// database connection
+  mongo = require('mongodb'),
+  mongoUri = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/mydb';
 
 /**
  * Configuration
@@ -43,13 +46,23 @@ app.get('/', function (req, res) {
 });
 
 // serve all remaining files the client asks for
-app.get('*', function (req, res) {
+app.get('*', function (req, res, next) {
 
-  //console.log(req._parsedUrl.pathname);
-  res.sendfile(__dirname + '/public' + req._parsedUrl.pathname);
+  var basePath = req._parsedUrl.pathname.split('/');
+  basePath = basePath[1];
 
+  if (basePath !== 'api') {
+    res.sendfile(__dirname + '/public' + req._parsedUrl.pathname);
+  } else {
+    next();
+  }
 });
 
+app.get('/api/*', function (req, res) {
+  //res.send('Hello API');
+  console.log('you reached the API');
+  res.send(200, { id: 7882, firstName: 'Simon' });
+});
 
 /**
  * API

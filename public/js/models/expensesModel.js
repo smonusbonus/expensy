@@ -1,5 +1,5 @@
 //ExpenseModel Object constructor
-expenseTrackerAppModule.service('expensesModel', function (categoriesModel, userModel) {
+expenseTrackerAppModule.service('expensesModel', function ($http, categoriesModel, userModel) {
   'use strict';
   var sefl = this;
   // @TODO: use the ID from the backend / database
@@ -409,6 +409,23 @@ expenseTrackerAppModule.service('expensesModel', function (categoriesModel, user
   
     getSavingsPerDay : function () {
       return spendingStats.spendingDelta;
+    },
+
+    getExpensesFromDatabase : function () {
+      $http({method: 'GET', url: '/api/expenses/'}).
+        success(function(data, status, headers, config) {
+          // this callback will be called asynchronously
+          // when the response is available
+          console.log('succesful api call');
+          console.log(data);
+
+        }).
+        error(function(data, status, headers, config) {
+          // called asynchronously if an error occurs
+          // or server returns response with an error status.
+          console.log('erroneous api call');
+
+        });
     }
     
   };
