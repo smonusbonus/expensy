@@ -61,8 +61,12 @@ app.get('*', function (req, res, next) {
 
 // database connection
 var mongodb = require('mongodb'),
-  mongoUri = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/mydb',
+  mongoUri = process.env.MONGOHQ_URL || 'mongodb://127.0.0.1:27017',
   mongoClient = mongodb.mongoClient;
+
+console.log(mongodb);
+console.log(mongoUri);
+console.log(mongoClient);
 
 app.get('/api/expenses', function (req, res) {
   //res.send('Hello API');
@@ -76,7 +80,7 @@ app.get('/api/expenses', function (req, res) {
     // operate on the collection named "expenses"
     var expenesCollection = db.collection('expenses');
 
-    collection.find({}).limit(30).toArray(function (err, docs) {
+    expenesCollection.find({}).limit(30).toArray(function (err, docs) {
       if (err) {
         return console.error(err);
       }
@@ -86,6 +90,8 @@ app.get('/api/expenses', function (req, res) {
         console.log('found document: ', doc);
       });
     });
+
+  });
 
 });
 
