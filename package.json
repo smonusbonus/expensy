@@ -1,8 +1,8 @@
 {
   "name": "expensy",
-  "version": "0.0.1",
+  "version": "1.0.0-beta",
   "description": "A mobile web application for tracking your expenses",
-  "main": "app.js",
+  "main": "server.js",
   "author": "Simon Kreiser <simokrei@gmail.com>",
   "license": "MIT",
   "repository": {
@@ -13,8 +13,11 @@
     "node": "0.10.x"
   },
   "dependencies": {
+    "body-parser": "^1.12.0",
     "express": "^4.12.0",
-    "mongodb": "~1.4.0"
+    "method-override": "^2.3.1",
+    "mongoose": "^3.8.23",
+    "morgan": "^1.5.1"
   },
   "devDependencies": {
     "grunt": "~0.4.2",

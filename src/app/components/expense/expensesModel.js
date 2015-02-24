@@ -22,7 +22,6 @@ expenseTrackerAppModule.service('expensesModel', function ($http, categoriesMode
   // pre-defined expenses for testing
   /*expenses.push(
     {
-      id : 0,
       amount : 123.00,
       time : '10:33:51 AM',
       date : new Date(2014, 2, 10),
@@ -411,21 +410,23 @@ expenseTrackerAppModule.service('expensesModel', function ($http, categoriesMode
       return spendingStats.spendingDelta;
     },
 
-    getExpensesFromDatabase : function () {
-      $http({method: 'GET', url: '/api/expenses/'}).
-        success(function(data, status, headers, config) {
+    getExpensesFromDB : function () {
+      var expenses = [];
+
+      return $http({method: 'GET', url: '/api/expenses/'});
+        /*success(function(data, status, headers, config) {
           // this callback will be called asynchronously
           // when the response is available
           console.log('succesful api call');
           console.log(data);
-
+          expenses.push(data);
         }).
         error(function(data, status, headers, config) {
           // called asynchronously if an error occurs
           // or server returns response with an error status.
           console.log('erroneous api call');
 
-        });
+        });*/
     }
     
   };

@@ -31,20 +31,26 @@ expenseTrackerAppModule.controller('expenseTracker.feedController', function ($s
 
 	// if on feeds main page	
 	} else {
-		//$scope.expenses = expensesModel.getExpensesChronologically();
-		$scope.expenses = expensesModel.getExpensesFromDatabase();
+		var httpPromise = expensesModel.getExpensesFromDB();
+		console.log(httpPromise);
 
-		$scope.expenses_categories = [];
+		httpPromise.success(function(data, status, headers, config) {
+			$scope.expenses = data;
+			console.log(data);
 
-		if ($scope.expenses !== undefined) {
-			for (var i = 0; i < $scope.expenses.length; i++) {
-				$scope.expenses_categories.push({
-					expense : $scope.expenses[i],
-					category : categoriesModel.getCategoryById($scope.expenses[i].category_id)
-				});
+			$scope.expenses_categories = [];
+
+			if ($scope.expenses !== undefined) {
+				for (var i = 0; i < $scope.expenses.length; i++) {
+					$scope.expenses_categories.push({
+						expense : $scope.expenses[i],
+						category : categoriesModel.getCategoryById($scope.expenses[i].categoryId)
+					});
+				}
 			}
-		}
-		
+
+		});
+
 	}
 
 	$scope.openDetailView = function (expenseId) {
