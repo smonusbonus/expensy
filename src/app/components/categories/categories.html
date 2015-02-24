@@ -21,7 +21,7 @@
           <i ng-if="c.icon != ''" class="fa {{c.icon}}"></i>
         </div>
         {{c.title}}
-        <a href="#deleteCategoryConfirm" class="btn btn-negative open-modal" data-categoryid="{{c.id}}">Delete</a>
+        <a href="#" ng-click="updateCategoryId(c.id)" data-modal="#deleteCategoryConfirm" class="btn btn-negative open-modal">Delete</a>
       </a>
     </li>
     <li class="table-view-divider">Custom</li>
@@ -31,7 +31,7 @@
           <i ng-if="c.icon == ''" class="fa">{{c.initial}}</i>
         </div>
         {{c.title}}
-        <a href="#deleteCategoryConfirm" class="btn btn-negative open-modal" data-categoryid="{{c.id}}">Delete</a>
+        <a href="#" ng-click="updateCategoryId(c.id)" data-modal="#deleteCategoryConfirm" class="btn btn-negative open-modal">Delete</a>
       </a>
     </li>
   </ul>
@@ -39,7 +39,7 @@
   
   <div id="deleteCategoryConfirm" class="modal">
     <header class="bar bar-nav">
-      <a class="icon icon-close pull-right" href="#deleteCategoryConfirm"></a>
+      <a class="icon icon-close pull-right" href="#" data-modal="#deleteCategoryConfirm"></a>
       <h1 class="title">Delete Category?</h1>
     </header>
 
@@ -47,8 +47,8 @@
       <div class="content-padded">
         <h2>Are you sure you want to delete this category?</h2>
         <p>Spendings you have saved in this category will be moved to the "other" category.</p>
-        <button class="btn btn-block btn-negative" ng-click="removeCategory()">Delete</button>
-        <a class="btn btn-block close-modal" href="#deleteCategoryConfirm">Cancel</a>
+        <a class="btn btn-block btn-negative" href="#" ng-click="removeCategory()">Delete</a>
+        <a class="btn btn-block close-modal" href="#" data-modal="#deleteCategoryConfirm">Cancel</a>
       </div>
     </div>
   </div>

@@ -1,7 +1,9 @@
-expenseTrackerAppModule.controller('expenseTracker.categoriesController', function ($scope, $location, categoriesModel, userModel, navigationService) {
+expenseTrackerAppModule
+.controller('expenseTracker.categoriesController', function ($scope, $location, categoriesModel, userModel, navigationService) {
 	'use strict';
 
 	$scope.currentUser = userModel.getCurrentUser();
+	$scope.selectedCategoryId = -1;
 	
 	$scope.categoryColors = categoriesModel.getAvailableColors();
 	$scope.selectedColor = -1;
@@ -31,21 +33,14 @@ expenseTrackerAppModule.controller('expenseTracker.categoriesController', functi
 		$scope.goBack();
 	};
 
+	$scope.updateCategoryId = function(id) {
+		console.log(id);
+		$scope.selectedCategoryId = id;
+	}
+
 	$scope.removeCategory = function () {
-		var clickedAnchor = document.getElementsByClassName('triggered-active-modal'),
-			anchorHref,
-			currentModal,
-			categoryId;
-
-		clickedAnchor = clickedAnchor[0];
-		categoryId = clickedAnchor.dataset.categoryid;
-
-		categoriesModel.removeCategoryFromCollection(categoryId);
-
-		anchorHref = clickedAnchor.getAttribute('href');
-
-		currentModal = document.querySelector(anchorHref);
-		currentModal.classList.toggle('active');
+		categoriesModel.removeCategoryFromCollection($scope.selectedCategoryId);
+		$('.modal.active').removeClass('active');
 	};
 
 });
