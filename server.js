@@ -40,34 +40,32 @@
 
             // if there is an error retrieving, send the error. nothing after res.send(err) will execute
             if (err) {
-                res.send(err)
+                res.send(err);
             }
                 
             res.json(expenses); // return all expenses in JSON format
         });
     });
 
-    // create todo and send back all todos after creation
-    /*app.post('/api/expenses', function(req, res) {
+    // create expense and send back all todos after creation
+    app.post('/api/expenses', function(req, res) {
 
-        // create a todo, information comes from AJAX request from Angular
-        Expense.create({
-            description : req.body.text,
-            done : false
-        }, function(err, todo) {
+        // create an expense, information comes from AJAX request from Angular
+        Expense.create(req.body, function(err, expense) {
             if (err)
                 res.send(err);
 
-            // get and return all the todos after you create another
-            Todo.find(function(err, todos) {
-                if (err)
-                    res.send(err)
-                res.json(todos);
+            // get and return all the expenses after you create another
+            Expense.find(function(err, expenses) {
+                if (err) {
+                    res.send(err);
+                } 
+                res.json(expenses);
             });
         });
-
     });
 
+    /*
     // delete a todo
     app.delete('/api/todos/:todo_id', function(req, res) {
         Todo.remove({

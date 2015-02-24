@@ -10,98 +10,13 @@ expenseTrackerAppModule.service('expensesModel', function ($http, categoriesMode
     spendingStats,
 
     expense = {
-      id : -1,
-      amount : 0.0,
+      amount : 0,
       time : null,
       date : null,
       location : null,
       description : null,
-      category_id : null
+      categoryId : null
     };
-
-  // pre-defined expenses for testing
-  /*expenses.push(
-    {
-      amount : 123.00,
-      time : '10:33:51 AM',
-      date : new Date(2014, 2, 10),
-      location : null,
-      description : null,
-      category_id : 2
-    },
-    {
-      id : 1,
-      amount : 45.00,
-      time : '11:33:51 AM',
-      date : new Date(2014, 2, 10),
-      location : null,
-      description : null,
-      category_id : 2
-    },
-    {
-      id : 2,
-      amount : 301,
-      time : '10:44:51 AM',
-      date : new Date(2014, 2, 11),
-      location : null,
-      description : null,
-      category_id : 3
-    },
-    {
-      id : 3,
-      amount : 21,
-      time : '7:33:51 AM',
-      date : new Date(2014, 2, 12),
-      location : null,
-      description : null,
-      category_id : 1
-    },
-    {
-      id : 4,
-      amount : 79,
-      time : '3:33:51 PM',
-      date : new Date(2014, 2, 13),
-      location : null,
-      description : null,
-      category_id : 3
-    },
-    {
-      id : 5,
-      amount : 103,
-      time : '8:03:51 AM',
-      date : new Date(2014, 2, 15),
-      location : null,
-      description : null,
-      category_id : 0
-    },
-    {
-      id : 6,
-      amount : 73,
-      time : '10:33:51 AM',
-      date : new Date(2014, 2, 15),
-      location : null,
-      description : null,
-      category_id : 2
-    },
-    {
-      id : 7,
-      amount : 137,
-      time : '10:33:51 AM',
-      date : new Date(2014, 2, 16),
-      location : null,
-      description : null,
-      category_id : 4
-    },
-    {
-      id : 8,
-      amount : 89,
-      time : '10:33:51 AM',
-      date : new Date(2014, 2, 17),
-      location : null,
-      description : null,
-      category_id : 1
-    }
-  );*/
 
   Date.prototype.monthDays = function () {
     var d = new Date(this.getFullYear(), this.getMonth() + 1, 0);
@@ -112,7 +27,9 @@ expenseTrackerAppModule.service('expensesModel', function ($http, categoriesMode
     var determinedate = new Date();
     determinedate.setFullYear(this.getFullYear(), this.getMonth(), this.getDate());
     var D = determinedate.getDay();
-    if(D == 0) D = 7;
+    if (D === 0) {
+      D = 7;
+    } 
     determinedate.setDate(determinedate.getDate() + (4 - D));
     var YN = determinedate.getFullYear();
     var ZBDoCY = Math.floor((determinedate.getTime() - new Date(YN, 0, 1, -6)) / 86400000);
@@ -139,9 +56,7 @@ expenseTrackerAppModule.service('expensesModel', function ($http, categoriesMode
   return {
       
     initNewExpense : function () {
-      currentExpense = jQuery.extend(true, {}, expense);
-      currentExpense.id = nextIDCounter;
-      nextIDCounter = nextIDCounter + 1;
+      currentExpense = expense;
       return currentExpense;
     },
 
@@ -166,14 +81,20 @@ expenseTrackerAppModule.service('expensesModel', function ($http, categoriesMode
     },
 
     setCategory : function (newCategory) {
-      currentExpense.category_id = newCategory;
+      currentExpense.categoryId = newCategory;
     },
 
-    // higher level functions
-
     addExpenseToCollection : function (expense) {
-      // return detailViewId;
-      expenses.push(currentExpense);
+
+      console.log(expense);
+
+      var req = {
+        method: 'POST',
+        url: '/api/expenses/',
+        data: expense
+      };
+
+      return $http(req);
     },
 
     removeExpenseFromCollection : function (expenseId) {
@@ -243,7 +164,8 @@ expenseTrackerAppModule.service('expensesModel', function ($http, categoriesMode
                 data : this.getThisWeeksExpenses()
               }
           ]
-      }
+      };
+
       return data;
     },
 
@@ -280,7 +202,8 @@ expenseTrackerAppModule.service('expensesModel', function ($http, categoriesMode
                 data : budgetGradArray
               }
           ]
-      }
+      };
+
       return data;
     },
 
@@ -355,8 +278,8 @@ expenseTrackerAppModule.service('expensesModel', function ($http, categoriesMode
         if (typeof expenses[i].date === 'string') {
           expenses[i].date = new Date(expenses[i].date);
         }
-        if (expenses[i]['date'].getMonth() ===  month) {
-          monthlyTotal += expenses[i]['amount'];
+        if (expenses[i].date.getMonth() ===  month) {
+          monthlyTotal += expenses[i].amount;
         }
       }
       return monthlyTotal;
@@ -369,7 +292,7 @@ expenseTrackerAppModule.service('expensesModel', function ($http, categoriesMode
 
       // sort expenses, descending
       expenses.sort(function(a,b){
-        return new Date(b['date']) - new Date(a['date']);
+        return new Date(b.date) - new Date(a.date);
       });
 
       var oneMonthAgoDate = new Date();
@@ -379,8 +302,8 @@ expenseTrackerAppModule.service('expensesModel', function ($http, categoriesMode
 
       for (var i = 0; i < NO_OF_DAYS; i++) {
         if ( expenses[i] !== undefined ) {
-          if ( expenses[i]['date'] > oneMonthAgoDate ) {
-            sumOfExpenses += expenses[i]['amount'];
+          if ( expenses[i].date > oneMonthAgoDate ) {
+            sumOfExpenses += expenses[i].amount;
           }
         }
       }
@@ -411,22 +334,7 @@ expenseTrackerAppModule.service('expensesModel', function ($http, categoriesMode
     },
 
     getExpensesFromDB : function () {
-      var expenses = [];
-
       return $http({method: 'GET', url: '/api/expenses/'});
-        /*success(function(data, status, headers, config) {
-          // this callback will be called asynchronously
-          // when the response is available
-          console.log('succesful api call');
-          console.log(data);
-          expenses.push(data);
-        }).
-        error(function(data, status, headers, config) {
-          // called asynchronously if an error occurs
-          // or server returns response with an error status.
-          console.log('erroneous api call');
-
-        });*/
     }
     
   };

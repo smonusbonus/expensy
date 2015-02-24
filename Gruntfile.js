@@ -82,10 +82,14 @@ module.exports = function (grunt) {
         },
       },
     },
+    jshint: {
+      beforeconcat: ['src/app/**/*.js', 'server.js'],
+      afterconcat: ['build/*.js']
+    },
     watch: {
       scripts: {
         files: ['src/app/**/*.js'],
-        tasks: ['concat', 'copy'],
+        tasks: ['jshint', 'concat', 'copy'],
         options: {
           spawn: false,
         },
@@ -97,18 +101,26 @@ module.exports = function (grunt) {
           spawn: false,
         },
       },
+      styles: {
+        files: ['src/assets/scss/*.scss'],
+        tasks: ['sass'],
+        options: {
+          spawn: false,
+        },
+      }
     },
   });
 
   // Load the plugin that provides the "uglify" task.
   grunt.loadNpmTasks('grunt-bower-concat');  
   grunt.loadNpmTasks('grunt-contrib-concat');
-  grunt.loadNpmTasks('grunt-contrib-copy');  
+  grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-uglify');  
   grunt.loadNpmTasks('grunt-contrib-sass');  
   grunt.loadNpmTasks('grunt-contrib-watch');
 
   // Default task(s).
-  grunt.registerTask('default', ['concat', /*'uglify', */'sass', 'copy', 'bower_concat']);
+  grunt.registerTask('default', ['concat', 'jshint', /*'uglify',*/ 'sass', 'copy', 'bower_concat']);
 
 };

@@ -36,7 +36,7 @@ expenseTrackerAppModule
 	$scope.updateCategoryId = function(id) {
 		console.log(id);
 		$scope.selectedCategoryId = id;
-	}
+	};
 
 	$scope.removeCategory = function () {
 		categoriesModel.removeCategoryFromCollection($scope.selectedCategoryId);

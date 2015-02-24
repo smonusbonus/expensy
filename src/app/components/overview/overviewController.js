@@ -19,7 +19,7 @@ expenseTrackerAppModule.controller('expenseTracker.overviewController', function
       	var context = canvas.getContext('2d');
       	context.canvas.width = 300;
 		context.canvas.height = 200;
-		context.clearRect(0,0,canvas.width,canvas.height)
+		context.clearRect(0,0,canvas.width,canvas.height);
 		$scope.chartBudget = new Chart(context).Line(getBudgetData(),{pointDot : false, bezierCurve : false,scaleShowGridLines : false});
 		$scope.budgetChartVisible = true;
 		$scope.catChartVisible = false;
@@ -31,7 +31,7 @@ expenseTrackerAppModule.controller('expenseTracker.overviewController', function
       	var context = canvas.getContext('2d');
       	context.canvas.width = 300;
 		context.canvas.height = 200;
-		context.clearRect(0,0,canvas.width,canvas.height)
+		context.clearRect(0,0,canvas.width,canvas.height);
 		$scope.chartTime = new Chart(context).Line(getTimeData(),{});
 		$scope.budgetChartVisible = false;
 		$scope.catChartVisible = false;
@@ -43,7 +43,7 @@ expenseTrackerAppModule.controller('expenseTracker.overviewController', function
       	var context = canvas.getContext('2d');
       	context.canvas.width = 300;
 		context.canvas.height = 200;
-		context.clearRect(0,0,canvas.width,canvas.height)
+		context.clearRect(0,0,canvas.width,canvas.height);
 		$scope.chartCategory = new Chart(context).Doughnut(getCategoryData());
 		$scope.budgetChartVisible = false;
 		$scope.catChartVisible = true;

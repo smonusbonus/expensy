@@ -16,7 +16,7 @@ expenseTrackerAppModule.service('knobModel', function (expensesModel) {
     now = new Date();
 
     $ival = element;
-	}
+	};
 
    var incr = function () {
 		infiniteValue++;
