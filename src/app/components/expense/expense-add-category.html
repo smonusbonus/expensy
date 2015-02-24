@@ -1,0 +1,45 @@
+<!-- Make sure all your bars are the first things in your <body> -->
+<header class="bar bar-nav">
+  
+  <!--<a class="btn btn-link btn-nav pull-left" href="#expenses/add">
+    <span class="icon icon-left-nav"></span>
+    Back
+  </a>-->
+
+  <a class="btn btn-link btn-nav pull-right" ng-click="chooseCategory()">
+    Next
+    <span class="icon icon-right-nav"></span>
+  </a>
+
+  <h1 class="title">
+    <span ng-if="userCurrency.position != 'right'">{{userCurrency.sign}}</span> {{amount}} <span ng-if="userCurrency.position == 'right'">{{userCurrency.sign}}</span>
+  </h1>
+</header>
+
+<ng-include src="'app/shared/nav-bar-bottom.html'"></ng-include>
+
+<!-- Wrap all non-bar HTML in the .content div (this is actually what scrolls) -->
+<div class="content add-expense-category">
+
+  <h2 class="centered">Pick a category</h2>
+
+  <ul class="table-view category-list">
+    <li class="table-view-cell" ng-repeat="category in categories" style="background-color: {{ categoryColors[category.color_id].color_value }};">
+      <span ng-click="chooseCategory(category.id)"></span>
+      <a class="category-label">
+        {{category.title}}
+      </a>
+      <i ng-if="category.icon != ''" class="fa fa-2x {{category.icon}}"></i>
+      <i ng-if="category.icon == ''" class="fa fa-2x">{{category.initial}}</i>
+
+    </li>
+    <li class="table-view-cell add-new-category-button">
+      <a class="clickArea" href="#settings/categories/add"></a>
+      <a class="category-label">
+        Add category
+      </a>
+      <i class="fa fa-2x fa-plus"></i>
+    </li>
+  </ul>
+
+</div>

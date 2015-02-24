@@ -1,0 +1,32 @@
+<!-- Make sure all your bars are the first things in your <body> -->
+<header class="bar bar-nav">
+    <a class="btn btn-link btn-nav pull-left" ng-click="goBack()">
+      <span class="icon icon-left-nav"></span>
+      Back
+    </a>
+  <h1 class="title">Add category</h1>
+</header>
+
+<ng-include src="'app/shared/nav-bar-bottom.html'"></ng-include>
+
+<!-- Wrap all non-bar HTML in the .content div (this is actually what scrolls) -->
+<div class="content content-padded settings add-category" ng-swipe-right="goBack()">
+      
+  <form>
+    <h3>Title</h3>
+    <input type="text" placeholder="Beer" name="category-name" ng-model="currentCategory.title">
+  </form>
+
+  <div class="pick-color">
+    <h3>Color</h3>
+  
+    <ul class="table-view color-list">
+       <button class="btn btn-color-select" style="background-color: {{c.color_value}};" ng-repeat="c in availableColors" ng-click="chooseColorForCategory(c.id)">
+          {{c.color}}
+         <span ng-if="selectedColor == c.id" class="icon icon-check"></span>
+       </button>
+    </ul>
+    
+    <button class="btn btn-positive btn-block" ng-click="saveCategory()">Save category</button>
+  </div>  
+</div>

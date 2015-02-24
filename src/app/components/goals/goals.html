@@ -1,0 +1,91 @@
+<!-- Make sure all your bars are the first things in your <body> -->
+<header class="bar bar-nav">
+  <h1 class="title">Goals</h1>
+  <a ng-if="hasBudget == true" class="icon icon-plus pull-right" href="#settings/goals/add"></a>
+</header>
+
+<ng-include src="'app/shared/nav-bar-bottom.html'"></ng-include>
+
+<!-- Wrap all non-bar HTML in the .content div (this is actually what scrolls) -->
+<div class="content goals">
+  <div ng-if="hasBudget == true">
+    <h2 class="centered">Spending behaviour</h2>
+    <ul class="table-view">
+      <li class="table-view-cell">
+        Average daily spending
+        <span class="pull-right amount">
+          <span ng-if="userCurrency.position != 'right'">{{userCurrency.sign}}</span> 
+          {{spendingStats.averageSpendingPerDay}}
+          <span ng-if="userCurrency.position == 'right'">{{userCurrency.sign}}</span>
+        </span>
+      </li>
+
+      <li class="table-view-cell">
+        Maxium daily spending
+        <span class="pull-right amount">
+          <span ng-if="userCurrency.position != 'right'">{{userCurrency.sign}}</span> 
+          {{spendingStats.optimalSpendingPerDayByBudget}}
+          <span ng-if="userCurrency.position == 'right'">{{userCurrency.sign}}</span>
+        </span>
+      </li>
+
+      <li class="table-view-cell">
+        Current daily saving
+        <span class="pull-right amount" ng-class="hasPositiveSpendingDelta()">
+          <span ng-if="userCurrency.position != 'right'">{{userCurrency.sign}}</span> 
+          {{spendingStats.spendingDelta}}
+          <span ng-if="userCurrency.position == 'right'">{{userCurrency.sign}}</span>
+        </span>
+      </li>
+    </ul>
+
+    <h2 class="centered">Goals</h2>
+    <ul class="table-view" ng-if="goals.length > 0">
+      <li class="table-view-cell media" ng-repeat="goal in goals">
+        <div class="media-body">
+          <div class="goal-days {{ getGoalColorBasedOnDays( goal.daysUntilGoalIsReached ) }}">
+            <span class="goal-days-number">{{goal.daysUntilGoalIsReached}}</span>
+            <span class="goal-days-tagline">days</span>
+          </div>
+
+          <div class="goal-description">
+            {{goal.description}}
+          </div>
+          <p class="goal-target">
+            <span ng-if="userCurrency.position != 'right'">{{userCurrency.sign}}</span> 
+            {{goal.target}}
+            <span ng-if="userCurrency.position == 'right'">{{userCurrency.sign}}</span>
+          </p>
+        </div>
+        <a href="#deleteGoalConfirm" class="btn btn-negative open-modal" data-goalid="{{goal.id}}">Delete</a>
+      </li>
+    </ul>
+    
+    <div ng-if="goals.length == 0" class="content-padded">
+      <p>When you define a saving goal you will get a prediction how long it will take to reach it based on your current spending behaviour.</p>
+    
+      <a class="btn btn-positive btn-block" href="#settings/goals/add">Add a goal</a>
+    </div>
+  </div>
+  
+  <div ng-if="hasBudget == false" class="content-padded">
+     <h2>You have not set your budget yet</h2>
+     <p>We need the budget to calculate your average savings.</p>
+     <a href="#settings/budget" class="btn btn-positive btn-block">Set budget</a>
+  </div>
+
+  <div id="deleteGoalConfirm" class="modal">
+    <header class="bar bar-nav">
+      <a class="icon icon-close pull-right" href="#deleteGoalConfirm"></a>
+      <h1 class="title">Delete Goal?</h1>
+    </header>
+
+    <div class="content">
+      <div class="content-padded">
+        <h2>Are you sure you want to delete this goal?</h2>
+        <button class="btn btn-block btn-negative" ng-click="removeGoal()">Delete</button>
+        <a class="btn btn-block close-modal" href="#deleteGoalConfirm">Cancel</a>
+      </div>
+    </div>
+  </div>
+</div>

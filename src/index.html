@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="expenseTracker">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>expenseTracker</title>
+
+    <!-- Sets initial viewport load and disables zooming  -->
+    <meta name="viewport" content="width=device-width, height: device-height, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+
+    <!-- Makes your prototype chrome-less once bookmarked to your phone's home screen -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    
+    <!-- Set a shorter title for iOS6 devices when saved to home screen -->
+    <meta name="apple-mobile-web-app-title" content="Ratchet">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+
+    <!-- Set Apple icons for when prototype is saved to home screen -->
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="touch-icons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="touch-icons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="touch-icons/apple-touch-icon-57x57.png">
+    
+
+    <link rel="stylesheet" href="css/bower.css">
+    <link rel="stylesheet" href="css/app.css">
+
+  </head>
+
+  <body>
+    <!-- main view -->
+    <div class="current-view" ng-view>
+
+    </div>
+
+
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/bower.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/shared.js"></script>
+    <script src="js/components.js"></script>
+
+
+  </body>
+</html>

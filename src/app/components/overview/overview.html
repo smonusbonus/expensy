@@ -1,0 +1,91 @@
+<!-- Make sure all your bars are the first things in your <body> -->
+<header class="bar bar-nav">
+  <h1 class="title">Overview</h1>
+</header>
+
+<ng-include src="'app/shared/nav-bar-bottom.html'"></ng-include>
+
+<!-- Wrap all non-bar HTML in the .content div (this is actually what scrolls) -->
+<div class="content">
+	<div class="overview">
+	  <div class="segmented-control">
+      <li id="categoryTab" ng-click="getCatChart()" class="control-item active">
+        Category
+      </li>
+      <li id="timeTab" ng-click="getWeekChart()" class="control-item">
+        Time
+      </li>
+      <li id="budgetTab" ng-click="getBudgetChart()" class="control-item"> 
+        Budget
+      </li>
+    </div>
+
+    <div class="charts">
+      <div id="byBudgetContainer" ng-show="budgetChartVisible"> 
+        <canvas id="byBudgetChart" class="dataChart" width="150" height="100"></canvas>
+        <ul class="table-view">
+          <li class="table-view-cell" >
+            Monthly Budget 
+            <span class="pull-right">
+              <span ng-if="userCurrency.position != 'right'">{{userCurrency.sign}}</span> 
+              {{budget}}
+              <span ng-if="userCurrency.position == 'right'">{{userCurrency.sign}}</span>
+            </span>
+          </li>
+          <li class="table-view-cell" >
+            Spent this month 
+            <span class="pull-right">
+              <span ng-if="userCurrency.position != 'right'">{{userCurrency.sign}}</span> 
+              {{monthlyTotal}}
+              <span ng-if="userCurrency.position == 'right'">{{userCurrency.sign}}</span>
+            </span>
+          </li>
+        </ul>
+      </div>
+
+      <div id="byCategoryContainer" ng-show="catChartVisible"> 
+        <canvas id="byCategoryChart" class="dataChart" width="150" height="100"></canvas>
+        <ul class="table-view">
+          <li class="table-view-cell" ng-repeat="category in categoriesList">
+            <a>
+              <div class="category-icon" style="background-color: {{ categoryColors[category.color_id].color_value }};">
+                <i ng-if="category.icon != ''" class="fa {{category.icon}}"></i>
+                <i ng-if="category.icon == ''" class="fa">{{category.initial}}</i>
+
+              </div>{{category.title}} 
+              <span class="pull-right">
+                <span ng-if="userCurrency.position != 'right'">{{userCurrency.sign}}</span> 
+                {{category.amount}}
+                <span ng-if="userCurrency.position == 'right'">{{userCurrency.sign}}</span>
+              </span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div id="byTimeContainer" ng-show="timeChartVisible">
+        <canvas id="byTimeChart" class="dataChart" width="150" height="100"></canvas>
+        <ul class="table-view">
+          <li class="table-view-cell">
+              <div class="category-icon" style="background-color: #97BBCD;"></div>
+              This Week
+              <span class="pull-right">
+                <span ng-if="userCurrency.position != 'right'">{{userCurrency.sign}}</span> 
+                {{weeklyTotals[0]}} 
+                <span ng-if="userCurrency.position == 'right'">{{userCurrency.sign}}</span>
+              </span>
+          </li>
+          <li class="table-view-cell">
+              <div class="category-icon" style="background-color: #DCDCDC;"></div>
+              Last Week
+              <span class="pull-right">
+                <span ng-if="userCurrency.position != 'right'">{{userCurrency.sign}}</span> 
+                {{weeklyTotals[1]}} 
+                <span ng-if="userCurrency.position == 'right'">{{userCurrency.sign}}</span>
+              </span>
+          </li>
+        </ul>
+      </div> 
+    </div>
+  </div>
+</div>

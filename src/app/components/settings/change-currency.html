@@ -1,0 +1,22 @@
+<!-- Make sure all your bars are the first things in your <body> -->
+<header class="bar bar-nav">
+  <a class="btn btn-link btn-nav pull-left" ng-click="goBack()">
+    <span class="icon icon-left-nav"></span>
+    Back
+  </a>
+  <h1 class="title">Select currency</h1>
+</header>
+
+<ng-include src="'app/shared/nav-bar-bottom.html'"></ng-include>
+
+<!-- Wrap all non-bar HTML in the .content div (this is actually what scrolls) -->
+<div class="content settings" ng-swipe-right="goBack()">
+  <ul class="table-view list-of-currencies">
+    <li class="table-view-cell" ng-repeat="currency in currencies" ng-click="setCurrency(currency.id)" ng-class="checkCurrency(currency.id)">
+      {{currency.name}}
+      <span>{{currency.sign}}</span>
+      <span class="icon icon-check"></span>
+    </li>
+  </ul>
+
+</div>

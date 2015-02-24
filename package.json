@@ -13,15 +13,18 @@
     "node": "0.10.x"
   },
   "dependencies": {
-    "express": "~3.5.1",
+    "express": "^4.12.0",
     "mongodb": "~1.4.0"
   },
   "devDependencies": {
     "grunt": "~0.4.2",
+    "grunt-bower-concat": "^0.4.0",
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-copy": "^0.8.0",
     "grunt-contrib-jshint": "~0.6.3",
     "grunt-contrib-nodeunit": "~0.2.0",
+    "grunt-contrib-sass": "~0.7.3",
     "grunt-contrib-uglify": "~0.4.0",
-    "grunt-contrib-concat": "~0.3.0",
-    "grunt-contrib-sass": "~0.7.3"
+    "grunt-contrib-watch": "^0.6.1"
   }
 }

@@ -1,0 +1,48 @@
+<!-- Make sure all your bars are the first things in your <body> -->
+<header class="bar bar-nav">
+  <h1 class="title">Settings</h1>
+</header>
+
+<ng-include src="'app/shared/nav-bar-bottom.html'"></ng-include>
+
+<!-- Wrap all non-bar HTML in the .content div (this is actually what scrolls) -->
+<div class="content settings">
+  <ul class="table-view list-of-settings">
+    <li class="table-view-cell media">
+      <a class="navigate-right" href="#settings/categories">
+        <!--<span class="media-object pull-left icon icon-plus"></span>-->
+        <i class="fa fa-tags pull-left"></i>
+        <div class="media-body">
+          Manage Categories
+        </div>
+      </a>
+    </li>
+    <li class="table-view-cell media">
+      <a class="navigate-right" href="#settings/goals/add">
+        <!--<span class="media-object pull-left icon icon-edit"></span>-->
+        <i class="fa fa-calendar pull-left"></i>
+        <div class="media-body">
+          Add new Goal
+        </div>
+      </a>
+    </li>
+    <li class="table-view-cell media">
+      <a class="navigate-right" href="#settings/budget">
+        <i class="fa fa-money pull-left"></i>
+        <!--<span class="media-object pull-left icon icon-compose"></span>-->
+        <div class="media-body">
+          Set Budget
+        </div>
+      </a>
+    </li>
+    <li class="table-view-cell media">
+      <a class="navigate-right" href="#settings/change-currency">
+        <!--<span class="media-object pull-left icon icon-gear"></span>-->
+        <i class="fa fa-dollar pull-left"></i>
+        <div class="media-body">
+          Set Currency
+        </div>
+      </a>
+    </li>
+  </ul>
+</div>
