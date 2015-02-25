@@ -24,13 +24,15 @@ expenseTrackerAppModule.controller('expenseTracker.expensesController', function
     knobModel.initialize($('div.ival'));
 
   // if we want to delete an expense
-  } else if ($location.$$path.indexOf('/expenses/remove/') !== -1) {
+  } /*else if ($location.$$path.indexOf('/expenses/remove/') !== -1) {
 
-    expensesModel.removeExpenseFromCollection($routeParams.id);
-    $location.path('/feed');
+    var expenseDelPromise = expensesModel.removeExpenseFromDB($routeParams.id);
+    expenseDelPromise.succes(function(data, status, headers, config) {
+      console.log(data);
+      $location.path('/feed');
+    });
 
-  // 
-  } else {
+  }*/ else {
 
     $scope.currentExpense = expensesModel.getCurrentExpense();
 
@@ -56,7 +58,6 @@ expenseTrackerAppModule.controller('expenseTracker.expensesController', function
 
     httpPromise.success(function(data, status, headers, config) {
       console.log(data);
-
       $location.path('/feed');
     });
   };

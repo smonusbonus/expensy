@@ -54,6 +54,18 @@ expenseTrackerAppModule.controller('expenseTracker.feedController', function ($s
 		});
 	}
 
+	$scope.removeExpense = function (expenseId) {
+
+    var expenseDelPromise = expensesModel.removeExpenseFromDB(expenseId);
+    expenseDelPromise.success(function(data, status, headers, config) {
+      console.log(data);
+      $location.path('/feed');
+    }).error(function(data, status, headers, config) {
+    	console.log('error occurred when trying to delete expense');
+    });
+    
+  };
+
 	$scope.openDetailView = function (expenseId) {
 		$location.path('/feed/detail/' + expenseId);
 	};

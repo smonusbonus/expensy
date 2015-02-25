@@ -9,7 +9,6 @@
     var methodOverride = require('method-override');    // simulate DELETE and PUT (express4)
 
     // configuration =================
-
     mongoose.connect('mongodb://localhost/expensy');     // connect to mongoDB database
 
     app.use(express.static(__dirname + '/build'));                 // set the static files location /public/img will be /img for users
@@ -75,23 +74,16 @@
         });
     });
 
-    /*
     // delete a todo
-    app.delete('/api/todos/:todo_id', function(req, res) {
-        Todo.remove({
-            _id : req.params.todo_id
-        }, function(err, todo) {
-            if (err)
-                res.send(err);
+    app.delete('/api/expenses/:expenseId', function(req, res) {
+        Expense.remove({
+            _id : req.params.expenseId
+        }, function(err, expense) {
+            if (err) { res.send(err); }
 
-            // get and return all the todos after you create another
-            Todo.find(function(err, todos) {
-                if (err)
-                    res.send(err)
-                res.json(todos);
-            });
+            res.json({deletion: true});
         });
-    });*/
+    });
 
 
     // listen (start app with node server.js) ======================================
