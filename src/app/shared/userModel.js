@@ -8,7 +8,7 @@ expenseTrackerAppModule.service('userModel', function () {
 		eMailAddress : '',
 		budget : 0.0,
 		token : '',
-		currency: 2
+		currency: 0
 	};
 
 	return {

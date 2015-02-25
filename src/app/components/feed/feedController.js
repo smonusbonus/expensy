@@ -25,19 +25,21 @@ expenseTrackerAppModule.controller('expenseTracker.feedController', function ($s
 
 	// if on feeds/detail page
 	if ($location.$$path.indexOf('/feed/detail/') !== -1) {
-		$scope.expense = expensesModel.getExpenseById($routeParams.id);
-		$scope.category = categoriesModel.getCategoryById($scope.expense.category_id);
-		$scope.categoryColor = categoriesModel.getCategoryColorById($scope.category.color_id);
+
+		var expensePromise = expensesModel.getExpenseByIdFromDB($routeParams.id);
+		expensePromise.success(function(data, status, headers, config) {
+			$scope.expense = data[0];
+			$scope.category = categoriesModel.getCategoryById($scope.expense.categoryId);
+			$scope.categoryColor = categoriesModel.getCategoryColorById($scope.category.color_id);
+		});
 
 	// if on feeds main page	
 	} else {
-		var httpPromise = expensesModel.getExpensesFromDB();
-		console.log(httpPromise);
+		
+		var expensesPromise = expensesModel.getExpensesFromDB();
+		expensesPromise.success(function(data, status, headers, config) {
 
-		httpPromise.success(function(data, status, headers, config) {
 			$scope.expenses = data;
-			console.log(data);
-
 			$scope.expenses_categories = [];
 
 			if ($scope.expenses !== undefined) {
@@ -50,7 +52,6 @@ expenseTrackerAppModule.controller('expenseTracker.feedController', function ($s
 			}
 
 		});
-
 	}
 
 	$scope.openDetailView = function (expenseId) {

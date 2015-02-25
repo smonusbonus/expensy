@@ -333,6 +333,10 @@ expenseTrackerAppModule.service('expensesModel', function ($http, categoriesMode
       return spendingStats.spendingDelta;
     },
 
+    getExpenseByIdFromDB : function (expenseId) {
+      return $http({method: 'GET', url: '/api/expenses/' + expenseId});
+    },
+
     getExpensesFromDB : function () {
       return $http({method: 'GET', url: '/api/expenses/'});
     }

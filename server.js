@@ -32,18 +32,28 @@
     // routes ======================================================================
 
     // api ---------------------------------------------------------------------
-    // get all todos
+    // get all expenses
     app.get('/api/expenses', function(req, res) {
 
-        // use mongoose to get all todos in the database
         Expense.find(function(err, expenses) {
 
-            // if there is an error retrieving, send the error. nothing after res.send(err) will execute
             if (err) {
                 res.send(err);
             }
-                
             res.json(expenses); // return all expenses in JSON format
+        });
+    });
+
+    // get expense based on ID
+    app.get('/api/expenses/:expenseId', function(req, res) {
+
+        Expense.find({
+
+            _id : req.params.expenseId
+
+            }, function(err, expense) {
+                if (err) { res.send(err); }
+                res.json(expense);
         });
     });
 

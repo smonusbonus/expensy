@@ -29,9 +29,10 @@
 	</div>
 
 	<ul class="table-view feed-list">
+
 	  <li class="table-view-cell media" ng-repeat="expense_and_cat in expenses_categories">
 
-	    <a class="navigate-right" ng-click="openDetailView(expense_and_cat['expense'].id)">
+	    <a class="navigate-right" ng-click="openDetailView(expense_and_cat.expense._id)">
 
 	      <div class="media-body">
 
@@ -43,12 +44,12 @@
 
 	      	<span class="amount">
 	      		<span ng-if="userCurrency.position != 'right'">{{userCurrency.sign}}</span> 
-						{{expense_and_cat["expense"].amount}}
+						{{expense_and_cat.expense.amount}}
 						<span ng-if="userCurrency.position == 'right'">{{userCurrency.sign}}</span>
 					</span>
 
 					<span class="date">
-						{{expense_and_cat["expense"].date | date: 'MMM d'}}
+						{{expense_and_cat.expense.date | date: 'MMM d'}}
 					</span>
 
 	      </div>
