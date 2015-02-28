@@ -1,10 +1,8 @@
 //ExpenseModel Object constructor
-expenseTrackerAppModule.service('expensesModel', function ($http, categoriesModel, userModel) {
+expenseTrackerAppModule.service('expensesModel', function ($http, $q, categoriesModel, userModel) {
   'use strict';
-  var sefl = this;
-  // @TODO: use the ID from the backend / database
-  var nextIDCounter = 9,
-    categoryColors = categoriesModel.getAvailableColors(),
+
+  var categoryColors = categoriesModel.getAvailableColors(),
     expenses = [],
     currentExpense,
     spendingStats,
@@ -84,35 +82,6 @@ expenseTrackerAppModule.service('expensesModel', function ($http, categoriesMode
       currentExpense.categoryId = newCategory;
     },
 
-    addExpenseToCollection : function (expense) {
-
-      console.log(expense);
-
-      var req = {
-        method: 'POST',
-        url: '/api/expenses/',
-        data: expense
-      };
-
-      return $http(req);
-    },
-
-    removeExpenseFromCollection : function (expenseId) {
-      for (var key in expenses) {
-        if (expenses[key].id == expenseId) {
-          expenses.splice(expenses.indexOf(expenses[key]), 1);
-        }
-      }
-    },
-
-    getExpenseById : function (expenseId) {
-      for (var key in expenses) {
-        if (expenses[key].id == expenseId) {
-          return expenses[key];
-        }
-      }
-    },
-
     getExpensesChronologically : function () {
 
       var chronologicalExpenses = expenses;
@@ -126,23 +95,58 @@ expenseTrackerAppModule.service('expensesModel', function ($http, categoriesMode
       return chronologicalExpenses;
     },
 
+    filterExpCategory : function(expenses, categoryId) {
+      var isOfCategory = R.propEq('categoryId', categoryId);
+      var catExpenses = R.filter(isOfCategory, expenses); 
+      return catExpenses;
+    },
+
+    reduceExp : function(expenses) {
+
+      var add = function(a, b) {
+        return a.amount + b.amount;
+      };
+
+      R.reduce(add, 10, expenses); //=> 16
+
+    },
+
     getExpensesByCategory : function () {
       var categories = categoriesModel.listCategories(),
-        dataArray = [];
+        self = this;
 
-      for (var category in categories) {
-        var sum = 0;
-        for (var id in expenses) {
-          if (expenses[id].category_id == category){
-            sum += expenses[id].amount;
+      // get expenses from db and update dataArray by summing up values
+      return $q(function(resolve, reject) {
+
+        var expensesPromise = self.getExpensesFromDB();
+        expensesPromise.success(function(data, status, header, config) {
+
+          var categorySums = [];
+
+          for (var c = categories.length - 1; c >= 0; c--) {
+            
+            var amountList = [];
+            var catExpenses = R.filter(R.propEq('categoryId', categories[c].id), data);
+
+            for (var i = catExpenses.length - 1; i >= 0; i--) {
+              amountList.push(catExpenses[i].amount);
+            }
+
+            categorySums.push([ categories[c].id, R.sum(amountList) ]);
           }
-        }
-        dataArray[category] = {
-          value : sum,
-          color : categoryColors[ categories[category].color_id ].color_value
-        };
-      }
-      return dataArray;
+
+          var sortByAmount = R.sortBy(R.prop(1));
+          var categorySumsSorted = sortByAmount(categorySums);
+
+          console.log(categorySumsSorted);
+
+          resolve(categorySumsSorted);
+
+        }).error(function(data, status, header, config) {
+          reject('error occurred when retrieving expenses');
+        });
+      });
+
     },
 
     getExpensesByTime : function () {
@@ -333,8 +337,12 @@ expenseTrackerAppModule.service('expensesModel', function ($http, categoriesMode
       return spendingStats.spendingDelta;
     },
 
+    addExpenseToCollection : function (expense) {
+      return $http({method: 'POST', url: '/api/expenses/', data: expense});
+    },
+
     removeExpenseFromDB : function (expenseId) {
-      return $http({method: 'delete', url: '/api/expenses/' + expenseId});
+      return $http({method: 'DELETE', url: '/api/expenses/' + expenseId});
     },
 
     getExpenseByIdFromDB : function (expenseId) {

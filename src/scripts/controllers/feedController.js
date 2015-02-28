@@ -1,4 +1,5 @@
-expenseTrackerAppModule.controller('expenseTracker.feedController', function ($scope, $location, $routeParams, userModel, expensesModel, categoriesModel, currenciesModel) {
+expenseTrackerAppModule
+.controller('FeedCtrl', function ($scope, $location, $routeParams, userModel, expensesModel, categoriesModel, currenciesModel) {
 	'use strict';
 
 	$scope.categoryColors = categoriesModel.getAvailableColors();
@@ -41,6 +42,8 @@ expenseTrackerAppModule.controller('expenseTracker.feedController', function ($s
 
 			$scope.expenses = data;
 			$scope.expenses_categories = [];
+
+			console.log(data);
 
 			if ($scope.expenses !== undefined) {
 				for (var i = 0; i < $scope.expenses.length; i++) {

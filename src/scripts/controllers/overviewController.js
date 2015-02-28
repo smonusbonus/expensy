@@ -1,20 +1,37 @@
-expenseTrackerAppModule.controller('expenseTracker.overviewController', function($scope, $rootScope, userModel, expensesModel, categoriesModel, currenciesModel) {
+expenseTrackerAppModule
+.controller('OverviewCtrl', function($scope, $rootScope, userModel, expensesModel, categoriesModel, currenciesModel) {
 	'use strict';
+
 	$scope.budgetChartVisible = false;
 	$scope.catChartVisible = true;
-	$scope.timeChartVisible= false;
+	$scope.timeChartVisible = false;
+	$scope.categoriesList = {};
+	$scope.sortedCategoryExp = [];
 
-	$scope.categoriesList = (function(){
-		var categoryList = categoriesModel.listCategories();
-		var amountPerCategory = expensesModel.getExpensesByCategory();
-		for (var key in categoryList){
-			categoryList[key].amount = amountPerCategory[key].value;
-		}
-		return categoryList;
-	})();
+	$scope.getCategoryById = userModel.getCategoryById;
+
+	Chart.defaults.global.responsive = true;
+
+	$scope.updateCategorySums = function () {
+
+		var promise = expensesModel.getExpensesByCategory();
+
+		promise.then(function(expenses) {
+
+			$scope.sortedCategoryExp = expenses;
+			console.log(expenses);
+
+		}, function(reason) {
+		  console.log('Failed: ' + reason);
+		});
+
+	};
+	$scope.updateCategorySums();
+
+
 	$scope.categoryColors = categoriesModel.getAvailableColors();
 
-	$scope.getBudgetChart = function () {
+	$scope.createBudgetChart = function () {
 		var canvas = document.getElementById('byBudgetChart');
       	var context = canvas.getContext('2d');
       	context.canvas.width = 300;
@@ -26,7 +43,7 @@ expenseTrackerAppModule.controller('expenseTracker.overviewController', function
 		$scope.timeChartVisible= false;
 	};
 
-	$scope.getWeekChart = function () {
+	$scope.createWeekChart = function () {
 		var canvas = document.getElementById('byTimeChart');
       	var context = canvas.getContext('2d');
       	context.canvas.width = 300;
@@ -38,26 +55,40 @@ expenseTrackerAppModule.controller('expenseTracker.overviewController', function
 		$scope.timeChartVisible= true;
 	};
 
-	$scope.getCatChart = function () {
-		var canvas = document.getElementById('byCategoryChart');
-      	var context = canvas.getContext('2d');
-      	context.canvas.width = 300;
-		context.canvas.height = 200;
-		context.clearRect(0,0,canvas.width,canvas.height);
-		$scope.chartCategory = new Chart(context).Doughnut(getCategoryData());
+	$scope.createCatChart = function () {
+
+    // Get the context of the canvas element we want to select
+		var ctx = document.getElementById('byCategoryChart').getContext('2d');
+    ctx.width = 300;
+		ctx.height = 200;
+		//ctx.clearRect(0,0, canvas.width, canvas.height);
+
+		// request expenses sorted by category
+		var promise = expensesModel.getExpensesByCategory();
+		promise.then(function(expenses) {
+			var newCatChart = new Chart(ctx).Doughnut(expenses);
+		}, function(reason) {
+		  console.log('Failed: ' + reason);
+		});
+
+		// handle visibility of other charts
 		$scope.budgetChartVisible = false;
 		$scope.catChartVisible = true;
-		$scope.timeChartVisible= false;
+		$scope.timeChartVisible = false;
 	};
+
+	// create cat chart as default 
+	$scope.createCatChart();
+
 
 	$scope.weeklyTotals = expensesModel.getWeeklyTotals();
 	var currentMonth = (new Date()).getMonth();
 	$scope.monthlyTotal = expensesModel.getMonthlyTotal(currentMonth);
 	$scope.budget = userModel.getBudget();
 
-	var getCategoryData = function(){	
+	/*var getCategoryData = function(){	
 		return expensesModel.getExpensesByCategory();
-	};
+	};*/
 
 	var getTimeData = function(){
 		return expensesModel.getExpensesByTime();
@@ -68,11 +99,11 @@ expenseTrackerAppModule.controller('expenseTracker.overviewController', function
 	};
 
 	//Get context with jQuery - using jQuery's .get() method.
-	var ctxCategory = $("#byCategoryChart").get(0).getContext("2d");
+	/*var ctxCategory = $("#byCategoryChart").get(0).getContext("2d");
 	ctxCategory.width = 300;
 	ctxCategory.height= 200;
 	var myNewChart1 = new Chart(ctxCategory);
-	$scope.chartCategory = new Chart(ctxCategory).Doughnut(getCategoryData(),{});
+	$scope.chartCategory = new Chart(ctxCategory).Doughnut($scope.categoriesList, {});*/
 
 	var ctxTime = $("#byTimeChart").get(0).getContext("2d");
 	ctxTime.width = 300;

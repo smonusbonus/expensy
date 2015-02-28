@@ -3,8 +3,9 @@ logs/*
 node_modules/
 bower_components/
 build/
+public/
 tmp
 .DS_Store
 .idea
 .sass-cache/
-src/assets/scss/.sass-cache/
+src/styles/.sass-cache/

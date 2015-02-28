@@ -6,21 +6,27 @@ module.exports = function (grunt) {
     concat: {
       distApp: {
         // the files to concatenate
-        src: ['src/app/*.js'],
+        src: ['src/scripts/*.js'],
         // the location of the resulting JS file
-        dest: 'build/js/app.js'
+        dest: 'public/js/app.js'
       },
-      distComponents: {
+      distControllers: {
         // the files to concatenate
-        src: ['src/app/components/**/*.js'],
+        src: ['src/scripts/controllers/*.js'],
         // the location of the resulting JS file
-        dest: 'build/js/components.js'
+        dest: 'public/js/controllers.js'
       },
-      distShared: {
+      distDirectives: {
         // the files to concatenate
-        src: ['src/app/shared/*.js'],
+        src: ['src/scripts/directives/*.js'],
         // the location of the resulting JS file
-        dest: 'build/js/shared.js'
+        dest: 'public/js/directives.js'
+      },
+      distServices: {
+        // the files to concatenate
+        src: ['src/scripts/services/*.js'],
+        // the location of the resulting JS file
+        dest: 'public/js/services.js'
       },
     },/*
     uglify: {
@@ -50,27 +56,27 @@ module.exports = function (grunt) {
           style: 'compressed'
         },
         files: { // Dictionary of files
-          'build/css/app.css': 'src/assets/scss/app.scss' // 'destination': 'source'
+          'public/css/app.css': 'src/styles/app.scss' // 'destination': 'source'
         },
       },
     },
     copy: {
       main: {
         files: [
-          {expand: true,  cwd: 'src/', src: ['app/**/*.html'], dest: 'build/', filter: 'isFile'},
+          {expand: true,  cwd: 'src/', src: ['views/*.html'], dest: 'public/', filter: 'isFile'},
 
           // copy font files manually (bower-concat doesn't do it)
-          {expand: true,  cwd: 'bower_components/fontawesome/', src: ['fonts/*'], dest: 'build/', filter: 'isFile'},
-          {expand: true,  cwd: 'bower_components/ratchet/', src: ['fonts/*'], dest: 'build/', filter: 'isFile'},
+          {expand: true,  cwd: 'bower_components/fontawesome/', src: ['fonts/*'], dest: 'public/', filter: 'isFile'},
+          {expand: true,  cwd: 'bower_components/ratchet/', src: ['fonts/*'], dest: 'public/', filter: 'isFile'},
      
-          {src: ['src/index.html'], dest: 'build/index.html'},
+          {src: ['src/index.html'], dest: 'public/index.html'},
         ],
       },
     },
     bower_concat: {
       all: {
-        dest: 'build/js/bower.js',
-        cssDest: 'build/css/bower.css',
+        dest: 'public/js/bower.js',
+        cssDest: 'public/css/bower.css',
         exclude: [
 
         ],
@@ -83,12 +89,12 @@ module.exports = function (grunt) {
       },
     },
     jshint: {
-      beforeconcat: ['src/app/**/*.js', 'server.js'],
+      beforeconcat: ['src/scripts/**/*.js', 'server.js'],
       afterconcat: ['build/*.js']
     },
     watch: {
       scripts: {
-        files: ['src/app/**/*.js'],
+        files: ['src/scripts/**/*.js'],
         tasks: ['jshint', 'concat', 'copy'],
         options: {
           spawn: false,
@@ -102,7 +108,7 @@ module.exports = function (grunt) {
         },
       },
       styles: {
-        files: ['src/assets/scss/*.scss'],
+        files: ['src/styles/*.scss'],
         tasks: ['sass'],
         options: {
           spawn: false,

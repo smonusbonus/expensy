@@ -1,4 +1,5 @@
-expenseTrackerAppModule.controller('expenseTracker.expensesController', function ($scope, $location, $routeParams, $rootScope, userModel, expensesModel, categoriesModel, currenciesModel, knobModel) {
+expenseTrackerAppModule
+.controller('ExpensesCtrl', function ($scope, $location, $routeParams, $rootScope, userModel, expensesModel, categoriesModel, currenciesModel, knobModel) {
   'use strict';
 
   var currentCategoryId,
@@ -23,16 +24,7 @@ expenseTrackerAppModule.controller('expenseTracker.expensesController', function
 
     knobModel.initialize($('div.ival'));
 
-  // if we want to delete an expense
-  } /*else if ($location.$$path.indexOf('/expenses/remove/') !== -1) {
-
-    var expenseDelPromise = expensesModel.removeExpenseFromDB($routeParams.id);
-    expenseDelPromise.succes(function(data, status, headers, config) {
-      console.log(data);
-      $location.path('/feed');
-    });
-
-  }*/ else {
+  } else {
 
     $scope.currentExpense = expensesModel.getCurrentExpense();
 
@@ -47,7 +39,6 @@ expenseTrackerAppModule.controller('expenseTracker.expensesController', function
     if (categoryId === undefined) {
       categoryId = 5;
     }
-    //expensesModel.setCategory(categoryId);
     $scope.currentExpense.categoryId = categoryId;
 
     $location.path('/expenses/add/details');

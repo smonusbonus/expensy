@@ -3,19 +3,19 @@
   <h1 class="title">Overview</h1>
 </header>
 
-<ng-include src="'app/shared/nav-bar-bottom.html'"></ng-include>
+<ng-include src="'views/nav-bar-bottom.html'"></ng-include>
 
 <!-- Wrap all non-bar HTML in the .content div (this is actually what scrolls) -->
 <div class="content">
 	<div class="overview">
 	  <div class="segmented-control">
-      <li id="categoryTab" ng-click="getCatChart()" class="control-item active">
+      <li id="categoryTab" ng-click="createCatChart()" class="control-item active">
         Category
       </li>
-      <li id="timeTab" ng-click="getWeekChart()" class="control-item">
+      <li id="timeTab" ng-click="createWeekChart()" class="control-item">
         Time
       </li>
-      <li id="budgetTab" ng-click="getBudgetChart()" class="control-item"> 
+      <li id="budgetTab" ng-click="createBudgetChart()" class="control-item"> 
         Budget
       </li>
     </div>
@@ -44,18 +44,20 @@
       </div>
 
       <div id="byCategoryContainer" ng-show="catChartVisible"> 
+
         <canvas id="byCategoryChart" class="dataChart" width="150" height="100"></canvas>
+
         <ul class="table-view">
-          <li class="table-view-cell" ng-repeat="category in categoriesList">
+          <li class="table-view-cell" ng-repeat="categoryExp in sortedCategoryExp">
             <a>
-              <div class="category-icon" style="background-color: {{ categoryColors[category.color_id].color_value }};">
+              <div class="category-icon" style="background-color: {{ category.color }};">
                 <i ng-if="category.icon != ''" class="fa {{category.icon}}"></i>
                 <i ng-if="category.icon == ''" class="fa">{{category.initial}}</i>
-
-              </div>{{category.title}} 
+              </div>
+              {{ getCategoryById(categoryExp[0]).title }}
               <span class="pull-right">
                 <span ng-if="userCurrency.position != 'right'">{{userCurrency.sign}}</span> 
-                {{category.amount}}
+                {{ categoryExp[1] }}
                 <span ng-if="userCurrency.position == 'right'">{{userCurrency.sign}}</span>
               </span>
             </a>

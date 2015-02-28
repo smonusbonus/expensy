@@ -1,4 +1,5 @@
-expenseTrackerAppModule.controller('expenseTracker.goalsController', function ($scope, $location, goalsModel, userModel, currenciesModel, expensesModel, navigationService) {
+expenseTrackerAppModule
+.controller('GoalsCtrl', function ($scope, $location, goalsModel, userModel, currenciesModel, expensesModel, navigationService) {
   'use strict';
 
   $scope.currentUser = userModel.getCurrentUser();
