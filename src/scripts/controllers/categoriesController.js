@@ -1,5 +1,5 @@
 expenseTrackerAppModule
-.controller('CategoriesCtrl', function ($scope, $location, categoriesModel, userModel, navigationService) {
+.controller('CategoriesController', function ($scope, $location, categoriesModel, userModel, navigationService) {
 	'use strict';
 
 	$scope.currentUser = userModel.getCurrentUser();

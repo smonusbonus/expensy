@@ -1,5 +1,5 @@
 expenseTrackerAppModule
-.controller('ExpensesCtrl', function ($scope, $location, $routeParams, $rootScope, userModel, expensesModel, categoriesModel, currenciesModel, knobModel) {
+.controller('ExpensesController', function ($scope, $location, $routeParams, $rootScope, userModel, expensesModel, categoriesModel, currenciesModel, knobModel) {
   'use strict';
 
   var currentCategoryId,

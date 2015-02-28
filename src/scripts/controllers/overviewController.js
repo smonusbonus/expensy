@@ -1,5 +1,5 @@
 expenseTrackerAppModule
-.controller('OverviewCtrl', function($scope, $rootScope, userModel, expensesModel, categoriesModel, currenciesModel) {
+.controller('OverviewController', function($scope, $rootScope, userModel, expensesModel, categoriesModel, currenciesModel) {
 	'use strict';
 
 	$scope.budgetChartVisible = false;

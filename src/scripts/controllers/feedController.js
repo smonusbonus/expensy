@@ -1,5 +1,5 @@
 expenseTrackerAppModule
-.controller('FeedCtrl', function ($scope, $location, $routeParams, userModel, expensesModel, categoriesModel, currenciesModel) {
+.controller('FeedController', function ($scope, $location, $routeParams, userModel, expensesModel, categoriesModel, currenciesModel) {
 	'use strict';
 
 	$scope.categoryColors = categoriesModel.getAvailableColors();
